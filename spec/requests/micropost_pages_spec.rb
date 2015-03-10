@@ -29,6 +29,8 @@ describe "Micropost pages" do
         expect { click_button "Post" }.to change(Micropost, :count).by(1)
       end
     end
+
+
   end
 
   describe "micropost destruction" do
@@ -42,4 +44,6 @@ describe "Micropost pages" do
       end
     end
   end
+
+  
 end

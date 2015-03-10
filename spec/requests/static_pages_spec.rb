@@ -6,6 +6,8 @@ describe "StaticPages" do
 #let(:base_title){'Ruby on Rails Tutorial Sample App'}
 	subject { page }
 
+
+
 	shared_examples_for "all static pages" do
 		it {should have_selector('h1',text: heading)}
 		it {should have_title(full_title(page_title))}
@@ -17,21 +19,31 @@ describe "StaticPages" do
   		 it_should_behave_like "all static pages"
 	    it { should_not have_title('| Home') }
 
-     describe "for signed-in users" do
-      let(:user) { FactoryGirl.create(:user) }
-      before do
-        FactoryGirl.create(:micropost, user: user, content: "Lorem ipsum")
-        FactoryGirl.create(:micropost, user: user, content: "Dolor sit amet")
-        sign_in user
-        visit root_path
-      end
-          it "should render the user's feed" do
-            user.feed.each do |item|
-              expect(page).to have_selector("li##{item.id}", text: item.content)
+       describe "for signed-in users" do
+        let(:user) { FactoryGirl.create(:user) }
+        before do
+          2.times {FactoryGirl.create(:micropost, user: user, content: "Lorem ipsum")}
+          #FactoryGirl.create(:micropost, user: user, content: "Dolor sit amet")
+          sign_in user
+          visit root_path
+        end
+            it "should render the user's feed" do
+              user.feed.each do |item|
+                expect(page).to have_selector("li##{item.id}", text: item.content)
+              end
             end
-          end
-      end
+
+            describe "should microposts counts" do 
+               before { click_link "delete", match: :first }
+                it "count's not work in microposts" do
+                  expect(page).to have_selector("span", text: "1 micropost")
+                end
+             
+            end
+       end
  	end
+
+ 
 
   describe "Help page" do
   		before { visit help_path }	
@@ -71,6 +83,20 @@ describe "StaticPages" do
     click_link "sample app"
     expect(page).to have_title(full_title(''))
   end
+  #Это не работает  Validation failed: Email has already been taken
+
+    describe "micropost pagination" do
+    let(:user) { FactoryGirl.create(:user) }
+    before do
+      31.times { FactoryGirl.create(:micropost, user: user) }
+      sign_in user
+      visit root_path
+    end
+    after { user.microposts.destroy_all }
+
+    it { should have_selector("div.pagination") }
+  end
+
 
 end
 
