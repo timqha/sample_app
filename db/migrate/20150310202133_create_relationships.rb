@@ -12,4 +12,3 @@ class CreateRelationships < ActiveRecord::Migration
     add_index :relationships, [:follower_id, :followed_id], unique: true
   end
 end
-11.1.2
