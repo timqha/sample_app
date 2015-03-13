@@ -1,36 +1,36 @@
 require 'spec_helper'
 
 describe "AuthenticarionPages" do
-	subject {page}
+	subject { page }
 
-	describe "signin page"do 
-		before {visit signin_path}
-			it{should have_selector('h1', text: 'Sign in')}
-			it{should have_title('Sign in')}
-		end
+	describe "signin page" do
+		before { visit signin_path }
+		it { should have_selector('h1', text: 'Sign in') }
+		it { should have_title('Sign in') }
+	end
 
-		describe "signin" do
-			before {visit signin_path}
-			describe "with invalid information" do
-				before { click_button "Sign in" }
-				it { should have_title('Sign in') }
-				it { should have_selector('div.alert.alert-error') }
-				describe "after visiting another page" do
-					before { click_link "Home" }
-					it { should_not have_selector('div.alert.alert-error') }
-				end
+	describe "signin" do
+		before { visit signin_path }
+		describe "with invalid information" do
+			before { click_button "Sign in" }
+			it { should have_title('Sign in') }
+			it { should have_selector('div.alert.alert-error') }
+			describe "after visiting another page" do
+				before { click_link "Home" }
+				it { should_not have_selector('div.alert.alert-error') }
 			end
-			describe "with valid information" do
-				let(:user) {FactoryGirl.create(:user)}
-				before do
-					fill_in "Email", with: user.email.upcase
-					fill_in "Password", with: user.password
-					click_button "Sign in"
-				end
-				it{should have_title(user.name)}
-				it{should have_link('Profile', href:user_path(user))}
-				it{should have_link('Sign out', href:signout_path)}
-				it{should_not have_link('Sign in', href:signin_path)}
+		end
+		describe "with valid information" do
+			let(:user) { FactoryGirl.create(:user) }
+			before do
+				fill_in "Email", with: user.email.upcase
+				fill_in "Password", with: user.password
+				click_button "Sign in"
+			end
+			it { should have_title(user.name) }
+			it { should have_link('Profile', href: user_path(user)) }
+			it { should have_link('Sign out', href: signout_path) }
+			it { should_not have_link('Sign in', href: signin_path) }
 			describe "followed by signout" do
 				before { click_link "Sign out" }
 				it { should have_link('Sign in') }
@@ -44,7 +44,7 @@ describe "AuthenticarionPages" do
 			describe "when attempting to visit a protected page" do
 				before do
 					visit edit_user_path(user)
-					fill_in "Email",    with: user.email
+					fill_in "Email", with: user.email
 					fill_in "Password", with: user.password
 					click_button "Sign in"
 				end
@@ -62,40 +62,40 @@ describe "AuthenticarionPages" do
 				end
 
 				describe "visiting the following page" do
-		          before { visit following_user_path(user) }
-		          it { should have_title('Sign in') }
-		        end
+					before { visit following_user_path(user) }
+					it { should have_title('Sign in') }
+				end
 
-		        describe "visiting the followers page" do
-		          before { visit followers_user_path(user) }
-		          it { should have_title('Sign in') }
-		        end
+				describe "visiting the followers page" do
+					before { visit followers_user_path(user) }
+					it { should have_title('Sign in') }
+				end
 			end
 
 			describe "in the Microposts controller" do
 
-		        describe "submitting to the create action" do
-		          before { post microposts_path }
-		          specify { expect(response).to redirect_to(signin_path) }
-		        end
+				describe "submitting to the create action" do
+					before { post microposts_path }
+					specify { expect(response).to redirect_to(signin_path) }
+				end
 
-		        describe "submitting to the destroy action" do
-		          before { delete micropost_path(FactoryGirl.create(:micropost)) }
-		          specify { expect(response).to redirect_to(signin_path) }
-		        end
-		    end
+				describe "submitting to the destroy action" do
+					before { delete micropost_path(FactoryGirl.create(:micropost)) }
+					specify { expect(response).to redirect_to(signin_path) }
+				end
+			end
 
-		    describe "in the Relationships controller" do
-		        describe "submitting to the create action" do
-		          before { post relationships_path }
-		          specify { expect(response).to redirect_to(signin_path) }
-		        end
+			describe "in the Relationships controller" do
+				describe "submitting to the create action" do
+					before { post relationships_path }
+					specify { expect(response).to redirect_to(signin_path) }
+				end
 
-		        describe "submitting to the destroy action" do
-		          before { delete relationship_path(1) }
-		          specify { expect(response).to redirect_to(signin_path) }
-		        end
-		    end
+				describe "submitting to the destroy action" do
+					before { delete relationship_path(1) }
+					specify { expect(response).to redirect_to(signin_path) }
+				end
+			end
 		end
 		describe "as wrong user" do
 			let(:user) { FactoryGirl.create(:user) }
@@ -128,26 +128,26 @@ describe "AuthenticarionPages" do
 			end
 		end
 		describe "as non-asmin user" do
-			let(:user) {FactoryGirl.create(:user) }
+			let(:user) { FactoryGirl.create(:user) }
 			let(:non_admin) { FactoryGirl.create(:user) }
 
-			before {sign_in non_admin, no_capybara: true }
+			before { sign_in non_admin, no_capybara: true }
 
 			describe "submitting a DELETE request to the Users#destroy action" do
-		        before { delete user_path(user) }
-		        specify { expect(response).to redirect_to(root_url) }
-		    end
+				before { delete user_path(user) }
+				specify { expect(response).to redirect_to(root_url) }
+			end
 		end
-	end 
+	end
 
 	describe "with valid information" do
 		let(:user) { FactoryGirl.create(:user) }
 		before { sign_in user }
 		it { should have_title(user.name) }
-		it { should have_link('Users',       href: users_path) }
-		it { should have_link('Profile',     href: user_path(user)) }
-		it { should have_link('Settings',    href: edit_user_path(user)) }
-		it { should have_link('Sign out',    href: signout_path) }
+		it { should have_link('Users', href: users_path) }
+		it { should have_link('Profile', href: user_path(user)) }
+		it { should have_link('Settings', href: edit_user_path(user)) }
+		it { should have_link('Sign out', href: signout_path) }
 		it { should_not have_link('Sign in', href: signin_path) }
 	end
 end

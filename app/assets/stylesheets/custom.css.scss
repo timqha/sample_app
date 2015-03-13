@@ -12,7 +12,6 @@ $grayMediumLight: #eaeaea;
   box-sizing: border-box;
 }
 
-
 /* universal */
 
 html {
@@ -33,10 +32,9 @@ textarea {
 
 .center {
   text-align: center;
-}
-
-.center h1 {
-  margin-bottom: 10px;
+  h1 {
+    margin-bottom: 10px;
+  }
 }
 
 /* typography */
@@ -78,11 +76,10 @@ p {
   padding-top: 9px;
   font-weight: bold;
   line-height: 1;
-}
-
-#logo:hover {
-  color: #fff;
-  text-decoration: none;
+  &:hover {
+    color: #fff;
+    text-decoration: none;
+  }
 }
 
 /* footer */
@@ -93,34 +90,23 @@ footer {
   border-top: 1px solid #eaeaea;
   color: $grayLight;
   a {
-  	color:#555;
-	&:hover{
-		color:#222;
-	}
+    color: #555;
+    &:hover {
+      color: #222;
+    }
   }
-  small {float:left;}
-  ul{
-  	float: right;
-	list-style: none;
-	li {
-		float: left;
-		margin-left: 10px;
-	}
+  small {
+    float: left;
   }
-
+  ul {
+    float: right;
+    list-style: none;
+    li {
+      float: left;
+      margin-left: 10px;
+    }
+  }
 }
-
-footer ul {
-  float: right;
-  list-style: none;
-}
-
-footer ul li {
-  float: left;
-  margin-left: 10px;
-}
-
-
 
 /* miscellaneous */
 
@@ -131,6 +117,7 @@ footer ul li {
   margin-top: 45px;
   @include box_sizing;
 }
+
 /* sidebar */
 
 aside {
@@ -216,7 +203,6 @@ input {
   @extend .error;
 }
 
-
 /* Users index */
 
 .users {
@@ -232,7 +218,6 @@ input {
   }
 }
 
-
 /* microposts */
 
 .microposts {
@@ -244,16 +229,20 @@ input {
     border-top: 1px solid #e8e8e8;
   }
 }
+
 .content {
   display: block;
 }
+
 .timestamp {
   color: $grayLight;
 }
+
 .gravatar {
   float: left;
   margin-right: 10px;
 }
+
 aside {
   textarea {
     height: 100px;
