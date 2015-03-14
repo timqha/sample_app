@@ -7,3 +7,6 @@ by [Майкл Хартл](http://michaelhartl.com/).
 
 Онлайн:
 https://still-hollows-4073.herokuapp.com/
+
+
+Pass: foobar
