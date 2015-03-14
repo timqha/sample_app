@@ -2,15 +2,13 @@ require 'spec_helper'
 
 describe "StaticPages" do
 
-
-#let(:base_title){'Ruby on Rails Tutorial Sample App'}
 	subject { page }
-
-
+	# Для всех страниц проверяем title
 	shared_examples_for "all static pages" do
 		it { should have_selector('h1', text: heading) }
 		it { should have_title(full_title(page_title)) }
 	end
+
 	describe "Home page" do
 		before { visit root_path }
 		let(:heading) { 'Sample App' }
@@ -22,16 +20,17 @@ describe "StaticPages" do
 			let(:user) { FactoryGirl.create(:user) }
 			before do
 				2.times { FactoryGirl.create(:micropost, user: user, content: "Lorem ipsum") }
-				#FactoryGirl.create(:micropost, user: user, content: "Dolor sit amet")
 				sign_in user
 				visit root_path
 			end
+			# Сгенерированый Home page должен вкл в себя li#соответствующий_id.
 			it "should render the user's feed" do
 				user.feed.each do |item|
 					expect(page).to have_selector("li##{item.id}", text: item.content)
 				end
 			end
 
+			# Проверем, что счетчик микросообщений работает.
 			describe "should microposts counts" do
 				before { click_link "delete", match: :first }
 				it "count's not work in microposts" do
@@ -56,7 +55,6 @@ describe "StaticPages" do
 
 	describe "Help page" do
 		before { visit help_path }
-
 		let(:heading) { 'Help' }
 		let(:page_title) { '' }
 		it_should_behave_like "all static pages"
@@ -68,7 +66,6 @@ describe "StaticPages" do
 		let(:heading) { 'About Us' }
 		let(:page_title) { '' }
 		it_should_behave_like "all static pages"
-
 	end
 
 	describe "Contact page" do
@@ -78,6 +75,7 @@ describe "StaticPages" do
 		it_should_behave_like "all static pages"
 	end
 
+	# Проверка сыллок.
 	it "should have the right links on the layout" do
 		visit root_path
 		click_link "About"
@@ -92,8 +90,8 @@ describe "StaticPages" do
 		click_link "sample app"
 		expect(page).to have_title(full_title(''))
 	end
-	#Это не работает  Validation failed: Email has already been taken
 
+	# Работа пагинации.
 	describe "micropost pagination" do
 		let(:user) { FactoryGirl.create(:user) }
 		before do
@@ -105,8 +103,6 @@ describe "StaticPages" do
 
 		it { should have_selector("div.pagination") }
 	end
-
-
 end
 
 

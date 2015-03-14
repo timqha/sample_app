@@ -18,7 +18,6 @@ describe "User pages" do
 
 		describe "with invalid information" do
 			before { click_button "Save changes" }
-
 			it { should have_content('error') }
 		end
 
@@ -115,11 +114,13 @@ describe "User pages" do
 	describe "signup page" do
 		before { visit signup_path }
 		let(:submit) { "Create my account" }
+
 		#Проверяет на создание пользователя с пустыми данными. нужно что б не создало. тогда тест пройдет
 		describe "with invalid information" do
 			it "should not create a user" do
 				expect { click_button submit }.not_to change(User, :count)
 			end
+
 			#тесты для сообщений об  ошибка
 			describe "after submission" do
 				before { click_button submit }
@@ -127,6 +128,7 @@ describe "User pages" do
 				it { should have_content('error') }
 			end
 		end
+
 		describe "with valid information" do
 			before do
 				fill_in "Name", with: "Example User"
@@ -173,13 +175,12 @@ describe "User pages" do
 					expect(page).to have_selector('li', text: user.name)
 				end
 			end
-
 		end
 
 		describe "delete links" do
 
 			it { should_not have_link('delete') }
-
+			# Для администратора должна быть кнопка delete
 			describe "as an admin user" do
 				let(:admin) { FactoryGirl.create(:admin) }
 				before do
@@ -196,24 +197,6 @@ describe "User pages" do
 				it { should_not have_link('delete', href: user_path(admin)) }
 			end
 		end
-=begin
-    before do
-      sign_in FactoryGirl.create(:user)
-      FactoryGirl.create(:user, name: "Bob", email: "bob@example.com")
-      FactoryGirl.create(:user, name: "Ben", email: "ben@example.com")
-      visit users_path
-    end
-
-    it { should have_title('All users') }
-    it { should have_content('All users') }
-
-    it "should list each user" do
-      User.all.each do |user|
-        expect(page).to have_selector('li', text: user.name)
-      end
-    end
-=end
-
 	end
 
 	describe "following/followers" do

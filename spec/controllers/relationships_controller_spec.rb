@@ -1,14 +1,16 @@
 require 'spec_helper'
 
 describe RelationshipsController do
-
+	# Создаем пользователей
 	let(:user) { FactoryGirl.create(:user) }
 	let(:other_user) { FactoryGirl.create(:user) }
-
+	# Не использует Capybara для этих тестов
 	before { sign_in user, no_capybara: true }
 
 	describe "creating a relationship with Ajax" do
 
+		# xhr символизирует, что это AJAX запрос. (устаревший) P.S. используется в книге старая версия.
+		# Заменен на xml_http_request?
 		it "should increment the Relationship count" do
 			expect do
 				xhr :post, :create, relationship: { followed_id: other_user.id }

@@ -12,31 +12,26 @@ describe User do
 	it { should respond_to(:password_digest) }
 	it { should respond_to(:password) }
 	it { should respond_to(:password_confirmation) }
-
 	it { should respond_to(:remember_token) }
-
 	it { should respond_to(:authenticate) }
 	it { should respond_to(:admin) }
 	it { should respond_to(:microposts) }
 	it { should respond_to(:feed) }
 
 	# тестирование атрибута user.relationships
-
 	it { should respond_to(:relationships) }
-
 	it { should respond_to(:followed_users) }
 	it { should respond_to(:following?) }
 	it { should respond_to(:follow!) }
 	it { should respond_to(:unfollow!) }
-
 	it { should respond_to(:reverse_relationships) }
 	it { should respond_to(:followers) }
 
-
-	#Тест валидации
+	# Тест валидации
 	it { should be_valid }
 	it { should_not be_admin }
-	#Teст на пустое значение
+
+	# Teст на пустое значение
 	describe "When name is not present" do
 		before { @user.name = " " }
 		it { should_not be_valid }
@@ -65,7 +60,7 @@ describe User do
 		before { @user.save }
 		its(:remember_token) { should_not be_blank }
 	end
-	# end
+
 	describe "when email format is valid" do
 		it "should be valid" do
 			addresses = %w[user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn]
@@ -76,36 +71,27 @@ describe User do
 		end
 	end
 
-
-	describe "when email address is already taken" do
-		before do
-			user_with_same_email = @user.dup
-			user_with_same_email.save
-		end
-		it { should_not be_valid }
-	end
-
-
+	# Нечувствительный к регистру тест на отклонение дублирующихся адресов электронной почты.
 	describe "when email address is already taken" do
 		before do
 			user_with_same_email = @user.dup
 			user_with_same_email.email = @user.email.upcase
 			user_with_same_email.save
 		end
-
 		it { should_not be_valid }
 	end
-	#Тест на пустые пароли, что б не вводили
+
+	# Тест на пустые пароли, что б не вводили
 	describe "when password is not present" do
 		before { @user.password = @user.password_confirmation = " " }
 		it { should_not be_valid }
 	end
-	#Test несовпадения
+
+	# Test несовпадения
 	describe "when password doesn't match confirmation" do
 		before { @user.password_confirmation = "mismatch" }
 		it { should_not be_valid }
 	end
-
 
 	describe "return value of authenticate method" do
 		before { @user.save }
@@ -130,10 +116,10 @@ describe User do
 
 	describe "email address with mixed case" do
 		let(:mixed_case_email) { "Foo@ExaMPle.com" }
+
 		it "should be saved as all lower-case" do
 			@user.email = mixed_case_email
 			@user.save
-
 			expect(@user.reload.email).to eq mixed_case_email.downcase
 		end
 	end
@@ -192,7 +178,7 @@ describe User do
 		end
 	end
 
-
+	# Проверяет работу читает и кто читает его.
 	describe "following" do
 		let(:other_user) { FactoryGirl.create(:user) }
 		before do

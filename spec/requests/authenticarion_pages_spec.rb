@@ -14,10 +14,10 @@ describe "AuthenticarionPages" do
 		describe "with invalid information" do
 			before { click_button "Sign in" }
 			it { should have_title('Sign in') }
-			it { should have_selector('div.alert.alert-error') }
+			it { should have_error_message('Invalid') }
 			describe "after visiting another page" do
 				before { click_link "Home" }
-				it { should_not have_selector('div.alert.alert-error') }
+				it { should_not have_error_message('Invalid') }
 			end
 		end
 		describe "with valid information" do
@@ -44,9 +44,7 @@ describe "AuthenticarionPages" do
 			describe "when attempting to visit a protected page" do
 				before do
 					visit edit_user_path(user)
-					fill_in "Email", with: user.email
-					fill_in "Password", with: user.password
-					click_button "Sign in"
+					valid_signin user
 				end
 
 				describe "after signing in" do
@@ -97,6 +95,7 @@ describe "AuthenticarionPages" do
 				end
 			end
 		end
+		# Тестирование того, что действия edit и update требуют правильного пользователя
 		describe "as wrong user" do
 			let(:user) { FactoryGirl.create(:user) }
 			let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }
@@ -113,6 +112,7 @@ describe "AuthenticarionPages" do
 				specify { expect(response).to redirect_to(root_url) }
 			end
 		end
+
 		describe "for non-signed-in users" do
 			let(:user) { FactoryGirl.create(:user) }
 			describe "in the Users controller" do
@@ -127,7 +127,8 @@ describe "AuthenticarionPages" do
 				end
 			end
 		end
-		describe "as non-asmin user" do
+
+		describe "as non-admin user" do
 			let(:user) { FactoryGirl.create(:user) }
 			let(:non_admin) { FactoryGirl.create(:user) }
 

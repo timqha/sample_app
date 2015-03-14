@@ -10,40 +10,34 @@ describe "Micropost pages" do
 	describe "micropost creation" do
 		before { visit root_path }
 
+		# Проверка что нельзя добавить пост с невалидной инвормацией.
 		describe "with invalid information" do
-
 			it "should not create a micropost" do
 				expect { click_button "Post" }.not_to change(Micropost, :count)
 			end
-
 			describe "error messages" do
 				before { click_button "Post" }
 				it { should have_content('error') }
 			end
 		end
 
+		# С валидной инвормацией добавляется одна запись.
 		describe "with valid information" do
-
 			before { fill_in 'micropost_content', with: "Lorem ipsum" }
 			it "should create a micropost" do
 				expect { click_button "Post" }.to change(Micropost, :count).by(1)
 			end
 		end
-
-
 	end
 
+	# Удаление micropost коректным пользователем
 	describe "micropost destruction" do
 		before { FactoryGirl.create(:micropost, user: user) }
-
 		describe "as correct user" do
 			before { visit root_path }
-
 			it "should delete a micropost" do
 				expect { click_link "delete" }.to change(Micropost, :count).by(-1)
 			end
 		end
 	end
-
-
 end
