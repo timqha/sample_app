@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html ng-app>
+<html>
 <head>
 	<title><%= full_title(yield(:title)) %></title>
 	<%= stylesheet_link_tag "application", media: "all",
 						  "data-turbolinks-track" => true %>
 	<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= javascript_include_tag 'http://code.angularjs.org/1.1.4/angular.min.js' %>
+
 	<%= csrf_meta_tags %>
 
 	<%= render 'layouts/shim' %>
 
 </head>
-<body>
+<body ng-app="simpleApp">
 	<%= render 'layouts/header' %>
 	<div class="container">
 	  <% flash.each do |key, value| %>

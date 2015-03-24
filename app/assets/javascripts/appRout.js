@@ -4,8 +4,8 @@
 
 var simpleApp = angular.module('simpleApp',[
     'ngRoute',
-    'simpleControllers',
-    'simpleServices'
+   // 'simpleControllers',
+    //'simpleServices'
 ]);
 
 
@@ -24,7 +24,7 @@ simpleApp.config(['$routeProvider',
 
 
 
-
+/*
 var phonecatApp = angular.module('phonecatApp', [
     'ngRoute',
     'phonecatControllers',
@@ -47,3 +47,4 @@ phonecatApp.config(['$routeProvider',
                 redirectTo: '/phones'
             });
     }]);
+*/
