@@ -17,4 +17,6 @@
 //= require angular
 //= require angular-route
 //= require angular-rails-templates
+//= require main
+//= require angular/controllers/HomeCtrl
 //= require_tree .

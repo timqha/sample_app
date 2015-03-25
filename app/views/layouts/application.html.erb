@@ -2,10 +2,11 @@
 <html>
 <head>
 	<title><%= full_title(yield(:title)) %></title>
-	<%= stylesheet_link_tag "application", media: "all",
-						  "data-turbolinks-track" => true %>
-	<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag 'http://code.angularjs.org/1.1.4/angular.min.js' %>
+
+  <%= stylesheet_link_tag    "application", media: "all" %>
+  <%= javascript_include_tag "application" %>
+
+
 
 	<%= csrf_meta_tags %>
 
@@ -14,7 +15,7 @@
 </head>
 <body ng-app="simpleApp">
 	<%= render 'layouts/header' %>
-	<div class="container">
+	<div class="container" ng-view>
 	  <% flash.each do |key, value| %>
 		  <%= content_tag(:div, value, class: "alert alert-#{key}") %>
 		  <!-- <div class="alert alert-<%= key %>"><%= value %></div> -->
