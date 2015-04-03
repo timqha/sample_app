@@ -13,10 +13,15 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
-//= require turbolinks
 //= require angular
-//= require angular-route
+
+//= require angular-ui-router
 //= require angular-rails-templates
-//= require main
-//= require angular/controllers/HomeCtrl
-//= require_tree .
+//= require angular-ui-bootstrap
+
+//= require_tree ../angular
+//= require_tree ../templates
+
+
+
+

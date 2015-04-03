@@ -5,6 +5,7 @@ class StaticPagesController < ApplicationController
 			@feed_items = current_user.feed.paginate(page: params[:page])
     end
     render 'static_pages/home'
+
 	end
 
 	def help
