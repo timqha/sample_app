@@ -12,7 +12,7 @@ ruby '2.0.0'
 
   gem 'angularjs-rails'
   # manager packet js
-  gem 'bower-rails'
+
   gem 'angular-rails-templates'
 
   gem 'angular-ui-bootstrap-rails'

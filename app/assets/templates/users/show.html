@@ -1,0 +1,28 @@
+{{user.name}},{{@user.email}}
+
+<div class="row">
+	<aside class="span4">
+		<section>
+			<h1>
+
+                <span gravatar name="{{user.name}}" height="80"  width="80" email-hash="{{hashemail(user.email)}}"></span>
+                {{user.name}}
+			</h1>
+		</section>
+		<section>
+		  <%= render 'shared/stats' %>
+		</section>
+	</aside>
+{{user.id}}
+	<div class="span8">
+		<%= render 'follow_form' if signed_in? %>
+
+		<% if @user.microposts.any? %>
+		<h3>Microposts (<%= @user.microposts.count %>)</h3>
+		<ol class="microposts">
+			<%= render @microposts %>
+		</ol>
+			<%= will_paginate @microposts %>
+		<% end %>
+	</div>
+</div>

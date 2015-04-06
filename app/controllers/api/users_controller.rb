@@ -1,6 +1,6 @@
 module API
   class UsersController < ApplicationController
-    before_action :signed_in_user, only: [:index, :edit, :update, :destroy, :following, :followers]
+    before_action :signed_in_user, only: [ :edit, :update, :destroy, :following, :followers] #:index,
     before_action :correct_user, only: [:edit, :update]
     before_action :admin_user, only: :destroy
 
@@ -87,7 +87,7 @@ module API
       def signed_in_user
         if signed_in?
           store_location
-          redirect_to signin_url, notice: "Please sign in."
+         redirect_to signin_url, notice: "Please sign in."
         end
 
         def correct_user
@@ -96,7 +96,7 @@ module API
         end
 
         def admin_user
-          redirect_to(root_url) unless current_user.admin?
+          redirect_to("#/") unless current_user.admin?
         end
       end
   end

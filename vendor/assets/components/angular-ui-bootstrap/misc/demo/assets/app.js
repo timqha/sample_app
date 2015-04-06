@@ -159,7 +159,7 @@ var SelectModulesCtrl = function($scope, $modalInstance, modules, buildFilesServ
       zip.file('ui-bootstrap-custom-tpls-' + version + '.js', rawFiles.banner + jsTplFile);
       zip.file('ui-bootstrap-custom-tpls-' + version + '.min.js', rawFiles.banner + uglify(jsTplFile));
 
-      saveAs(zip.generate({type: 'blob'}), 'ui-bootstrap-custom-build.zip');
+      saveAs(zip.generate({type: 'blob'}), 'ui-bootstrap.zip');
     }
 
     function createNoTplFile(srcModuleNames, srcJsContent) {

@@ -1,13 +1,16 @@
 angular.module('app', [
     'ui.router',
     'templates',
-    'ui.bootstrap'
- //   'ngResource'
+    'ui.bootstrap',
+    'angular-md5',
+    'angular-loading-bar'
+
+    //   'ngResource'
     //  'ngRoute'
 
 ])
     ///  посмотреть как в он себя ведёт в rest client
-    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider,RestangularProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
         $stateProvider
             .state('home', {
@@ -36,11 +39,57 @@ angular.module('app', [
                 //template: "<div>help</div>",
                 controller: 'StaticHelpController'
             })
+            .state('signin', {
+                url: '/signin',
+                templateUrl: 'sessions/new.html',
+                //template: "<div>help</div>",
+                controller: 'StaticHelpController'
+            })
+            /*
             .state('users', {
                 url: '/users',
-                templateUrl: 'users/_index.html',
+                //abstract: true,
+                templateUrl: 'users/index.html',
                 controller: 'UserIndexController'
+            })
+            .state('users.index',{
+                url: '/index',
+                parent: 'users',
+                templateUrl: 'users/index.html'
+              //  controller: 'UserIndexController'
+            })
+            .state('users.show', {
+                url: '/{id}',
+                parent: 'users',
+                templateUrl: 'users/show.html'
+           //     controller: 'UserShowController'
+            });
 
+*/
+
+        .state('users', {
+            url: '/users',
+            abstract: true,
+            templateUrl: 'users/layouts.html'
+
+        })
+            .state('users.index',{
+                url: '/index',
+                parent: 'users',
+                templateUrl: 'users/index.html',
+                  controller: 'UserIndexController'
+            })
+            .state('users.show', {
+                url: '/:id/show',
+                parent: 'users',
+                templateUrl: 'users/show.html'
+
+                //controller: 'UserShowController'
+            })
+            .state('users.delete',{
+                url: '/:id/delete',
+                parent: 'users',
+                templateUrl: 'users/delete.html'
             });
         $urlRouterProvider.otherwise('home');
 

@@ -10,8 +10,8 @@
  */
 angular
     .module('app')
-    .factory('User', function ($resource) {
-        return $resource('api/users/:id.json');
+    .factory('UserFactory', function ($http) {
+        return  $http.get('/api/users');
     });
 
 angular.module('app')
