@@ -14,4 +14,7 @@ angular
 
         template: '<img alt="{{ name }}" height="{{ height }}"  width="{{ width }}" src="https://secure.gravatar.com/avatar/{{ emailHash }}.jpg">'
     };
-});
+
+
+})
+;

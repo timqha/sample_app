@@ -3,13 +3,14 @@ angular.module('app', [
     'templates',
     'ui.bootstrap',
     'angular-md5',
-    'angular-loading-bar'
-
+    //'angular-loading-bar'
+    'ng-token-auth'
     //   'ngResource'
     //  'ngRoute'
 
 ])
-    ///  посмотреть как в он себя ведёт в rest client
+
+
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
         $stateProvider
@@ -42,86 +43,45 @@ angular.module('app', [
             .state('signin', {
                 url: '/signin',
                 templateUrl: 'sessions/new.html',
-                //template: "<div>help</div>",
-                controller: 'StaticHelpController'
+                controller: 'UserSignInController'
             })
-            /*
+            .state('signout', {
+                url: '/signout',
+                controller: 'UserSignOutController'
+            })
+
             .state('users', {
                 url: '/users',
-                //abstract: true,
+                abstract: true,
+                templateUrl: 'users/layouts.html'
+
+            })
+            .state('users.index', {
+                url: '/index',
+                parent: 'users',
                 templateUrl: 'users/index.html',
                 controller: 'UserIndexController'
-            })
-            .state('users.index',{
-                url: '/index',
-                parent: 'users',
-                templateUrl: 'users/index.html'
-              //  controller: 'UserIndexController'
-            })
-            .state('users.show', {
-                url: '/{id}',
-                parent: 'users',
-                templateUrl: 'users/show.html'
-           //     controller: 'UserShowController'
-            });
-
-*/
-
-        .state('users', {
-            url: '/users',
-            abstract: true,
-            templateUrl: 'users/layouts.html'
-
-        })
-            .state('users.index',{
-                url: '/index',
-                parent: 'users',
-                templateUrl: 'users/index.html',
-                  controller: 'UserIndexController'
             })
             .state('users.show', {
                 url: '/:id/show',
                 parent: 'users',
-                templateUrl: 'users/show.html'
-
-                //controller: 'UserShowController'
+                templateUrl: 'users/show.html',
+                controller: 'UserShowController'
             })
-            .state('users.delete',{
-                url: '/:id/delete',
+            .state('users.destroy', {
+                url: '/:id/destroy',
                 parent: 'users',
-                templateUrl: 'users/delete.html'
+                templateUrl: 'users/delete.html',
+                controller: 'UserDeleteController'
             });
         $urlRouterProvider.otherwise('home');
 
     }]);
-
-
 /*
- .config('$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-
- //$locationProvider.html5Mode(true);
- $routeProvider
- .when("/help",{
- templateUrl: "static/_help.html",
- controller: "StaticHelp"
+ .run(function($rootScope, md5) {
+ $rootScope.hashemail = function(email) {
+ return md5.createHash(email);
+ };
  })
- .when("/home",{
- templateUrl: 'static/_home.html',
- controller: "StaticHome"
- })
- .when("/about",{
- templateUrl: "static/_about.html",
- controller: "StaticAbout"
- })
- .when("/contact",{
- templateUrl: "static/_contact.html",
- controller: "StaticContact"
- });
-
-
- });
- /*.config(function ($httpProvider) {
- $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
- });
-
  */
+

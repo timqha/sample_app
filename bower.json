@@ -15,6 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular-md5": "~0.1.7"
+    "angular-md5": "~0.1.7",
+    "ng-token-auth": "~0.0.24"
   }
 }

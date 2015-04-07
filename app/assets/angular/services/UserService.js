@@ -10,12 +10,71 @@
  */
 angular
     .module('app')
-    .factory('UserFactory', function ($http) {
-        return  $http.get('/api/users');
+    .service('UsersService', function ($http) {
+        // Return public API.
+        return ({
+            getAll: getAll,
+            getUser: getUser,
+            removeUser: removeUser
+            //   getFriends: getFriends,
+            //   removeFriend: removeFriend
+        });
+
+        function getAll() {
+            return $http.get('/api/users');
+        }
+
+        function getUser(id) {
+            return $http.get('/api/users/' + id);
+        }
+
+        function SignIN(){
+            return $http.post('/api/users')
+        }
+
+
+        function removeUser(id) {
+            var request = $http({
+                method: "delete",
+                url: '/api/users/' + id,
+                params: {
+                    action: "delete"
+                },
+                data: {
+                    id: id
+                }
+            });
+            return ( request.then(handleSuccess, handleError) );
+        }
+
+// ---
+// PRIVATE METHODS.
+// ---
+
+        function handleError(response) {
+// The API response from the server should be returned in a
+// nomralized format. However, if the request was not handled by the
+// server (or what not handles properly - ex. server error), then we
+// may have to normalize it on our end, as best we can.
+            if (
+                !angular.isObject(response.data) || !response.data.message
+            ) {
+                return ( $q.reject("An unknown error occurred.") );
+            }
+// Otherwise, use expected error message.
+            return ( $q.reject(response.data.message) );
+        }
+
+// I transform the successful response, unwrapping the application data
+// from the API response payload.
+        function handleSuccess(response) {
+            return ( response.data );
+        }
+
     });
 
 angular.module('app')
-    .factory('UsersService', [
+    .factory('UserFactory', [
         'Restangular', 'Users', function (Restangular, Users) {
             var model;
             model = 'usersmodel';

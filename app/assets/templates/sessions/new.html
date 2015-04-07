@@ -2,10 +2,10 @@
 <div class="row">
     <div class="span6 offset3">
 
-        <form ng-submit="login()" action="api/session" method="post">
+        <form ng-submit="login()" method="post">
             <div class="input-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" placeholder="Email" ng-model="user.email">
+                <input type="email" id="email" placeholder="Email" value="example@railstutorial.org" ng-model="user.email">
             </div>
             <div class="input-group">
                 <label for="password">Password</label>
