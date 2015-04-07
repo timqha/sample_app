@@ -1,17 +1,20 @@
+angular.module('Authentication', []);
 angular.module('app', [
     'ui.router',
     'templates',
     'ui.bootstrap',
     'angular-md5',
     //'angular-loading-bar'
-    'ng-token-auth'
+    //'ng-token-auth',
+    'Authentication',
+    'ngCookies'
     //   'ngResource'
     //  'ngRoute'
 
 ])
 
 
-    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+    .config(function ($stateProvider, $urlRouterProvider) {
 
         $stateProvider
             .state('home', {
@@ -38,16 +41,16 @@ angular.module('app', [
                 url: '/signup',
                 templateUrl: 'users/new.html',
                 //template: "<div>help</div>",
-                controller: 'StaticHelpController'
+                controller: 'AuthSignupController'
             })
             .state('signin', {
                 url: '/signin',
                 templateUrl: 'sessions/new.html',
-                controller: 'UserSignInController'
+                controller: 'AuthSignInController'
             })
             .state('signout', {
                 url: '/signout',
-                controller: 'UserSignOutController'
+                controller: 'AuthSignOutController'
             })
 
             .state('users', {
@@ -60,23 +63,45 @@ angular.module('app', [
                 url: '/index',
                 parent: 'users',
                 templateUrl: 'users/index.html',
-                controller: 'UserIndexController'
+                controller: 'UserIndexController',
+                secure: true
             })
             .state('users.show', {
                 url: '/:id/show',
                 parent: 'users',
                 templateUrl: 'users/show.html',
-                controller: 'UserShowController'
+                controller: 'UserShowController',
+                secure: true
             })
             .state('users.destroy', {
                 url: '/:id/destroy',
                 parent: 'users',
                 templateUrl: 'users/delete.html',
-                controller: 'UserDeleteController'
+                controller: 'UserDeleteController',
+                secure: true
             });
         $urlRouterProvider.otherwise('home');
 
-    }]);
+    })
+    .run(function ($rootScope, $location, $cookieStore, $http) {
+            // keep user logged in after page refresh
+            $rootScope.globals = $cookieStore.get('globals') || {};
+            if ($rootScope.globals.currentUser) {
+                $http.defaults.headers.common['app'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+            }
+
+            $rootScope.$on('$locationChangeStart', function (event, next, current) {
+                // redirect to login page if not logged in
+             /*  if ($location.path() !== '/signin' && !$rootScope.globals.currentUser) {
+                    $location.path('/signin');
+                }
+           */
+                var nextRoute = $location.path();
+                if (nextRoute.secure && !$rootScope.globals.currentUser) {
+                    $location.path('/signin');
+                }
+            });
+        });
 /*
  .run(function($rootScope, md5) {
  $rootScope.hashemail = function(email) {

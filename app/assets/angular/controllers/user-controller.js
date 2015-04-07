@@ -71,7 +71,7 @@ angular
 
     })
     .controller('UserDeleteController', function($stateParams, UserService){
-      UserService.removeUser($stateParams.id);
+      UserService.deleteUser($stateParams.id);
     })
     .controller('UserSignInController', function(){
 

@@ -13,9 +13,13 @@ angular
     .service('UsersService', function ($http) {
         // Return public API.
         return ({
-            getAll: getAll,
-            getUser: getUser,
-            removeUser: removeUser
+            getAll:     getAll,
+            getUser:    getUser,
+            removeUser: removeUser,
+            //getByUsername: getByUsername,
+            createUser: createUser,
+            updateUser: updateUser,
+            deleteUser: deleteUser
             //   getFriends: getFriends,
             //   removeFriend: removeFriend
         });
@@ -28,10 +32,17 @@ angular
             return $http.get('/api/users/' + id);
         }
 
-        function SignIN(){
-            return $http.post('/api/users')
+        function createUser(user){
+            return $http.post('/api/users', user);
         }
 
+        function updateUser(id){
+            return $http.post('api/users'+id);
+        }
+
+        function deleteUser(id) {
+            return $http.delete('api/users/'+id).then(handleSuccess, handleError('Error deleting user'));
+        }
 
         function removeUser(id) {
             var request = $http({

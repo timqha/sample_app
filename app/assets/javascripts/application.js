@@ -11,8 +11,8 @@
 //= require angular-loading-bar
 //= require bootstrap-tpls
 
-//= require ng-token-auth/dist/ng-token-auth
-//= require angular-cookie/angular-cookie
+
+//= require angular-cookies
 
 
 //= require_tree ../angular

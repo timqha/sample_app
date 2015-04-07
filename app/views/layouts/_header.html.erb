@@ -6,8 +6,9 @@
         <ul class="nav pull-right">
           <li><%= link_to "Home", "#/" %></li>
           <li><%= link_to "Help", "#help" %></li>
-
+          <li><a ui-sref="help">Help</a></li>
           <li><a ui-sref="users.index">Users</a></li>
+          <li><a ui-sref="signout">Log out</a></li>
           |
 		  <% if signed_in? %>
               <li><a ui-sref="users.index">Users</a></li>
